@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.5.9",
-        "baum/baum": "dev-master"
+        "baum/baum": "1.1.1"
     },
     "require-dev": {
 
