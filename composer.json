@@ -1,0 +1,25 @@
+{
+    "name": "jetcms/models",
+    "description": "CMS",
+    "keywords": ["laravel", "cms", "controllers"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex. Suroviy",
+            "email": "suroviy@bk.ru"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "baum/baum": "dev-master"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "JetCMS\\Admin\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
