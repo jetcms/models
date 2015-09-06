@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JetCMS\\Admin\\": "src/"
+            "JetCMS\\Models\\": "src/"
         }
     },
     "minimum-stability": "dev"
