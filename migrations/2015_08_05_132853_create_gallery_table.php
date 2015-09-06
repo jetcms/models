@@ -17,12 +17,12 @@ class CreateGalleryTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
 
-            $table->string('lable', 255);           
+            $table->string('lable', 255)->nullable();          
             $table->text('content')->nullable();
 
-            $table->integer('image_id', 11)->nullable();
-
             $table->boolean('active')->nullable();
+			
+			$table->integer('image_id')->nullable();
 
             $table->timestamps();
         });
