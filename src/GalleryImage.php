@@ -8,5 +8,5 @@ class GalleryImage extends Eloquent {
     {
         return $this->belongsTo('App\Gallery');
     }
-
+    
 }

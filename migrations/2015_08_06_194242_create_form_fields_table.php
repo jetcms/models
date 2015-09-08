@@ -26,6 +26,7 @@ class CreateFormFieldsTable extends Migration
             $table->boolean('type')->nullable();
             $table->boolean('require')->nullable();
             $table->boolean('active')->nullable();
+            $table->integer('order')->nullable();
 
             $table->timestamps();
         });

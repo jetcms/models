@@ -14,7 +14,7 @@ class FormField extends Eloquent {
 
     public function getOrderField()
 	{
-	    return 'sort';
+	    return 'order';
 	}
 
 }

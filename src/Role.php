@@ -20,6 +20,7 @@ class Role extends Eloquent {
     {
         $this->users()->detach();
         if ( ! $users) return;
+        if ( ! $this->exists) $this->save();
         $this->users()->attach($users);
     }
 
