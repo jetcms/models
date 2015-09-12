@@ -6,6 +6,18 @@ class Page extends Eloquent {
 
 	//protected $fillable = ['name', 'email', 'password','roles'];
 
+    static protected $activePage = null;
+
+    public function setActivePage()
+    {
+        self::$activePage = $this;
+    }
+
+    static public function getActivePage()
+    {
+        return self::$activePage;
+    }
+
 	public function menu()
     {
         return $this->belongsTo('App\Menu');

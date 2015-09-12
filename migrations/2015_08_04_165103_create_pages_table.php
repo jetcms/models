@@ -28,6 +28,8 @@ class CreatePagesTable extends Migration
             
             $table->dateTime('publish');
             $table->boolean('active')->nullable();
+            $table->boolean('list_in')->nullable();
+            $table->integer('sort')->nullable();
             $table->timestamps();
         });
     }
