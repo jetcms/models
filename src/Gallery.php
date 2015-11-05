@@ -8,7 +8,7 @@ class Gallery extends Eloquent {
 
     public function images()
     {
-        return $this->hasMany('App\GalleryImage');
+        return $this->hasMany('App\Image');
     }
 
 }

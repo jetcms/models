@@ -2,7 +2,7 @@
 
 use Eloquent;
 
-class PageField extends Eloquent {
+class Field extends Eloquent {
 
     public function page()
     {

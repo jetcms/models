@@ -19,6 +19,7 @@ class CreateCommentsTable extends Migration
             $table->string('lable', 255)->nullable(); 
             $table->text('content')->nullable(); 
             $table->morphs('comment');
+            $table->integer('reply_id')->nullable();
             $table->boolean('active')->nullable();
             $table->timestamps();
         });

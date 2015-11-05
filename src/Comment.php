@@ -11,7 +11,7 @@ class Comment extends Eloquent {
 
     public function object()
     {
-        return $this->morphTo();
+         return $this->morphTo();
     }
 
 }

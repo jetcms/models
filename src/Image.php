@@ -2,7 +2,7 @@
 
 use Eloquent;
 
-class GalleryImage extends Eloquent {
+class Image extends Eloquent {
 
     public function gallery()
     {

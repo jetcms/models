@@ -1,6 +1,6 @@
 <?php namespace JetCMS\Models;
 
-use App\Role;
+//use App\Role;
 use Carbon;
 use Hash;
 
