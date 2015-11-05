@@ -22,6 +22,7 @@ class CreatePagesTable extends Migration
 
             $table->string('alias', 255)->nullable();
             $table->string('policies', 255)->nullable();
+            $table->string('context', 255)->nullable();
             $table->string('image', 255)->nullable();
 
             $table->integer('menu_id')->nullable();
