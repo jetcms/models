@@ -1,11 +1,14 @@
 <?php namespace JetCMS\Models;
 
+use App\Tag;
+
 use Carbon\Carbon;
 use Eloquent;
 
 class Page extends Eloquent {
 
     protected $appends = ['url'];
+    protected $fieldsArray = null;
 
     static protected $activePage = null;
 
@@ -45,7 +48,7 @@ class Page extends Eloquent {
 
     public function tag()
     {
-        return $this->belongsToMany('App\Tag','page_tag','id')->withTimestamps();
+        return $this->belongsToMany('App\Tag','page_tag')->withTimestamps();
     }
 
     public function setTagAttribute($accessPages)
@@ -101,21 +104,36 @@ class Page extends Eloquent {
 
     }
 
-/*переменовать*/
-
-    public function getPageFieldToArrayAttribute()
+    public function getGalleryAttribute($value)
     {
-        $arr = [];
+        return preg_split('/,/', $value, -1, PREG_SPLIT_NO_EMPTY);
+    }
 
+    public function setGalleryAttribute($photos)
+    {
+        $this->attributes['gallery'] = implode(',', $photos);
+    }
+
+    public function fieldsToArray()
+    {
+        if ($this->fieldsArray) return $this->fieldsArray;
+        $arr = [];
         foreach ($this->fields as $val)
         {
             $arr[$val->name] = $val->value;
         }
-
+        $this->fieldsArray = $arr;
         return $arr;
     }
 
-        /*--------*/
+    public function field($name,$default = null)
+    {
+        if (isset($this->fieldsToArray()[$name])) {
+            return $this->fieldsToArray()[$name];
+        }
+
+        return $default;
+    }
 
     public function scopeContext($query,$value)
     {
