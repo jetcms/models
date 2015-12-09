@@ -140,6 +140,16 @@ class Page extends Eloquent {
         return $query->where('context',$value);
     }
 
+    public function scopeSort($query,$value = 'DESC')
+    {
+        $query->orderBy('sort','DESC');
+        $query->orderBy('publish','DESC');
+        return $query;
+    }
+
+
+
+
     public function scopeAlias($query,$alias)
     {
         return $query->where('alias',$alias);
