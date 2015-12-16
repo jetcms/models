@@ -114,4 +114,9 @@ class User extends Model implements AuthenticatableContract,
         return null;
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
 }

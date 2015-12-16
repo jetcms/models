@@ -130,9 +130,10 @@ class Page extends Eloquent {
     {
         if (isset($this->fieldsToArray()[$name])) {
             return $this->fieldsToArray()[$name];
-        }
 
-        return $default;
+        }else{
+            return $default;
+        }
     }
 
     public function scopeContext($query,$value)
