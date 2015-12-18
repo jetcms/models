@@ -1,15 +1,14 @@
 <?php namespace JetCMS\Models;
 
-use App\Tag;
-
+use App\Field;
 use Carbon\Carbon;
 use Eloquent;
 
 class Page extends Eloquent {
 
-    protected $appends = ['url'];
+    protected $appends = ['url','field_array'];
     protected $fieldsArray = null;
-
+    protected $dates = ['publish'];
     static protected $activePage = null;
 
     public function setActivePage()
@@ -101,7 +100,6 @@ class Page extends Eloquent {
         }else{
             return '/'.$this->attributes['alias'];
         }
-
     }
 
     public function getGalleryAttribute($value)
@@ -136,6 +134,51 @@ class Page extends Eloquent {
         }
     }
 
+    public function getFieldArrayAttribute()
+    {
+        return $this->fieldsToArray();
+    }
+
+    public function setFieldArrayAttribute($field)
+    {
+        $create = [];
+
+        if ( ! $field) return;
+        if ( ! $this->exists) $this->save();
+
+        $fields = Field::where('page_id',$this->id)->get();
+
+        if (is_array($field)){
+            foreach ($field as $key=>$val){
+                $isset = false;
+                foreach($fields as $v){
+                    if ($v->name == $key){
+                        $isset = true;
+                        if (!empty($val)){
+                            $v->value = $val;
+                        }else{
+                            Field::destroy($v->id);
+                        }
+                    }
+                }
+                if( ! $isset){
+                    $create[$key] = $val;
+                }
+            }
+            if (sizeof($create)>0){
+                foreach($create as $key=>$val){
+                    if (!empty($val)){
+                        $f = new Field();
+                        $f->name = $key;
+                        $f->value = $val;
+                        $fields[] = $f;
+                    }
+                }
+            }
+            $this->fields()->saveMany($fields);
+        }
+    }
+
     public function scopeContext($query,$value)
     {
         return $query->where('context',$value);
@@ -143,13 +186,10 @@ class Page extends Eloquent {
 
     public function scopeSort($query,$value = 'DESC')
     {
-        $query->orderBy('sort','DESC');
-        $query->orderBy('publish','DESC');
+        $query->orderBy('sort',$value);
+        $query->orderBy('publish',$value);
         return $query;
     }
-
-
-
 
     public function scopeAlias($query,$alias)
     {

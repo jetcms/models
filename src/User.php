@@ -119,4 +119,15 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Comment');
     }
 
+    public function getAvatarAttribute()
+    {
+        if (file_exists(public_path($this->attributes['avatar'])) and is_file(public_path($this->attributes['avatar'])))
+        {
+            return $this->attributes['avatar'];
+        }
+        else
+        {
+            return 'img/avatar.png';
+        }
+    }
 }
