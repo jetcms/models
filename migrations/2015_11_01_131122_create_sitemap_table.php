@@ -20,6 +20,7 @@ class CreateSitemapTable extends Migration
             $table->dateTime('lastmod');
             $table->string('changefreq');
             $table->decimal('priority',2);
+            $table->boolean('in_sitemap')->nullable();
 
             $table->timestamps();
         });
