@@ -3,12 +3,16 @@
 use App\Field;
 use Carbon\Carbon;
 use Eloquent;
+use Validator;
 
 class Page extends Eloquent {
 
     protected $appends = ['url','field_array'];
     protected $fieldsArray = null;
     protected $dates = ['publish'];
+
+    public $validator = null;
+
     static protected $activePage = null;
 
     public function setActivePage()
@@ -179,6 +183,39 @@ class Page extends Eloquent {
         }
     }
 
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = trim($value);
+    }
+
+    public function setContextAttribute($value)
+    {
+        $this->attributes['context'] = trim($value);
+    }
+
+    public function setAliasAttribute($value)
+    {
+        $this->attributes['alias'] = trim($value);
+    }
+
+    public function setPublishAttribute($value)
+    {
+        if (empty($value)) {
+            $this->attributes['publish'] = Carbon::now();
+        }else{
+            $this->attributes['publish'] = $value;
+        }
+    }
+
+    public function setSortAttribute($value)
+    {
+        if (empty($value)) {
+            $this->attributes['sort'] = 500;
+        }else{
+            $this->attributes['sort'] = $value;
+        }
+    }
+
     public function scopeContext($query,$value)
     {
         return $query->where('context',$value);
@@ -200,4 +237,30 @@ class Page extends Eloquent {
     {
         return $query->where('active',true)->where('publish', '<', Carbon::now());
     }
+
+    public function save(array $options = []){
+
+        $this->validator = Validator::make(
+            array(
+                'title' => trim($this->title),
+                'alias' => trim($this->alias)
+            ),
+            array(
+                'title' => 'unique:pages,title,'.$this->id,
+                'alias' => 'unique:pages,alias,'.$this->id.',id,context,'.trim($this->context)
+            ),
+            array(
+                'title' => 'double Title',
+                'alias' => 'double Alias this context'
+            )
+        );
+
+        if ($this->validator->fails())
+        {
+            return false;
+        }
+
+        return parent::save();
+    }
+
 }
